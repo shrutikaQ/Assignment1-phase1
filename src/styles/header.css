@@ -1,0 +1,210 @@
+
+/* ===============================
+   UPDATED HEADER COMPONENT
+   =============================== */
+
+/* Entire header bar */
+.header {
+  grid-area: header;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /* Reduced padding to move header left */
+  padding: 0 20px;
+  padding-left: calc(72px + 20px); /* sidebar 72px + small offset 20px */
+
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+/* Left section (logo + text) */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: 4px;
+   padding-left: 5px;
+}
+
+/* Logo */
+.brand-logo {
+  width: 28px;
+  height: 28px;
+  display: block;
+  /*padding-left: 50px;*/
+}
+
+/* Brand text */
+.brand-text .brand-name {
+  font-weight: 800;
+}
+
+.brand-text .brand-sub {
+  color: #2335d5;
+  font-weight: 700;
+}
+
+/* Right section */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon-btn {
+  background: #eef2ff;
+  color: var(--primary);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+/* ==========================================
+   COLORED INITIALS AVATAR — OPTION 1
+   Use this if your JSX is: <div class="user-avatar">SP</div>
+   ========================================== */
+
+.user-avatar {
+  --size: 38px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: var(--primary);  /* circle fill */
+  color: #fff;                 /* initials color (change if needed) */
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  user-select: none;
+  line-height: 1;
+  box-shadow: 0 0 0 2px var(--surface); /* subtle outline */
+}
+
+/* Hover/active (optional) */
+.user-avatar:hover {
+  filter: brightness(1.05);
+}
+
+/* ==========================================
+   COLORED INITIALs AVATAR — OPTION 2 (alt markup)
+   Use this if your JSX is:
+   <div class="user-chip"><span class="initials">SP</span></div>
+   ========================================== */
+
+.user-chip {
+  display: grid;
+  place-items: center;
+}
+
+.user-chip .initials {
+  --size: 38px;
+  width: var(--size);
+  height: var(--size);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary); /* circle fill */
+  color: #fff;               /* initials color */
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1;
+  user-select: none;
+  box-shadow: 0 0 0 2px var(--surface);
+}
+
+/* Optional hover for the alt markup */
+.user-chip .initials:hover {
+  filter: brightness(1.05);
+  cursor: default; /* set to pointer if it opens a menu */
+}
+
+/* ==========================================
+   OPTIONAL THEMING VARIANTS (commented)
+   Uncomment one of the following if you want
+   different letter styles.
+   ========================================== */
+
+/* Gradient-colored letters inside a light circle */
+
+.user-avatar.gradient,
+.user-chip .initials.gradient {
+  background: #eef2ff;  
+  color: transparent;
+  background-image: linear-gradient(135deg, #6366f1, #22c55e, #f59e0b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  box-shadow: 0 0 0 2px var(--surface);
+}
+
+
+/* Two solid colors per letter (wrap letters in spans):
+   <div class="user-avatar split"><span class="i1">S</span><span class="i2">P</span></div>
+*/
+
+.user-avatar.split {
+  background: #eef2ff;
+  color: inherit;
+}
+.user-avatar.split .i1 { color: #6366f1; } 
+.user-avatar.split .i2 { color: #22c55e; } 
+
+/* ===== Portal (right side text block) ===== */
+.portal {
+  display: grid;
+  align-items: center;
+  justify-items: start;
+  gap: 2px;                 /* tight vertical rhythm */
+  min-width: 0;             /* enables text truncation */
+}
+
+/* Title (primary line) */
+.portal-title {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--text, #0f172a);   /* falls back if --text missing */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;              /* prevent header overflow */
+}
+
+/* Subtitle (secondary line) */
+.portal-sub {
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--muted, #0865e8);  /* softer secondary color */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 170px;
+}
+
+/* Make it adapt in denser layouts */
+@media (max-width: 1024px) {
+  .portal-title,
+  .portal-sub {
+    max-width: 160px;
+  }
+}
+
+@media (max-width: 538px) {
+  .portal-title {
+    font-size: 5px;
+  }
+  .portal-sub {
+    font-size: 5px;
+  }
+}

@@ -1,0 +1,312 @@
+
+/* ========== Vertical Hover-Expand Sidebar (Screenshot Style) ========== */
+:root {
+  --rsp-width-collapsed: 56px;       /* icons-only width */
+  --rsp-width-expanded: 200px;       /* expanded width on hover/pinned */
+
+  --rsp-bg: #2335d5;                 /* main blue */
+  --rsp-bg-darker: #2335d5;          /* header/section darker band */
+  --rsp-bg-active: #2335d5;          /* active item background */
+
+  --rsp-text: #ffffff;
+  --rsp-muted: rgba(255, 255, 255, 0.7);
+  --rsp-border: rgba(255, 255, 255, 0.15);
+  --rsp-shadow: rgba(0, 0, 0, 0.25);
+  --rsp-transition: 200ms ease;
+  --rsp-radius: 12px;
+
+  --rsp-item-gap: 6px;               /* icon–label distance */
+  --rsp-item-pad-y: 12px;            /* item vertical padding */
+  --rsp-item-pad-x: 10px;
+
+  --rsp-z: 1000;
+
+  /* Alignment rail + icon sizing */
+  --rsp-left-rail: 6px;              /* single vertical rail for header/nav/footer */
+  --rsp-icon-circle: 24px;           /* outer circle (icon container) */
+  --rsp-icon-svg: 16px;              /* inner SVG size */
+}
+
+/* Root */
+.sidebar-rsp {
+  position: fixed;
+  inset: 0 auto 0 0;                 /* left anchored full height */
+  width: var(--rsp-width-collapsed);
+  background-color: var(--rsp-bg);
+  color: var(--rsp-text);
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* header / nav / footer */
+  box-shadow: 0 2px 16px var(--rsp-shadow);
+  z-index: var(--rsp-z);
+  overflow: hidden;
+  transition: width var(--rsp-transition);
+}
+
+/* Programmatic expansion (expanded state) */
+.sidebar-rsp.is-expanded {
+  width: var(--rsp-width-expanded);
+}
+
+/* Hover expansion when not pinned and in collapsed state */
+.sidebar-rsp.hover-expand:not(.is-pinned).is-collapsed:hover {
+  width: var(--rsp-width-expanded);
+}
+
+/* ===== Header ===== */
+.rsp__header {
+  position: relative;
+  padding: 14px 10px 10px 14px;
+  background-image: linear-gradient(180deg, var(--rsp-bg) 0%, var(--rsp-bg-darker) 100%);
+  background-color: var(--rsp-bg);   /* fallback */
+  border-bottom: 1px solid var(--rsp-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  /* align header block to the left rail */
+  padding-left: calc(var(--rsp-left-rail) + 8px);
+}
+
+.rsp__header-left {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.rsp__product {
+  font-weight: 600;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rsp__subproduct {
+  font-size: 12px;
+  color: var(--rsp-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Corner notch */
+.rsp__corner-notch {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  background-image: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.85) 50%);
+  background-color: transparent;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  opacity: 0.9;
+}
+
+/* Header controls */
+.rsp__controls {
+  display: flex;
+  gap: 6px;
+}
+.rsp__btn {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid var(--rsp-border);
+  background-color: transparent;
+  color: var(--rsp-text);
+  padding: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  line-height: 0;
+  transition:
+    background-color var(--rsp-transition),
+    border-color var(--rsp-transition),
+    transform var(--rsp-transition);
+}
+.rsp__btn:hover { background-color: rgba(255,255,255,0.08); }
+.rsp__btn:active { transform: scale(0.96); }
+
+/* ===== Navigation ===== */
+.rsp__nav {
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;                         /* generous like screenshot */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rsp-border) transparent;
+
+  /* align nav container to the rail */
+  padding-left: calc(var(--rsp-left-rail) + 0px);
+}
+
+/* Nav item (expanded baseline) */
+.rsp__item {
+  appearance: none;
+  -webkit-appearance: none;
+  display: grid;
+  grid-template-columns: 26px 1fr;   /* tighter icon col */
+  align-items: center;
+  gap: var(--rsp-item-gap);
+  padding: var(--rsp-item-pad-y) var(--rsp-item-pad-x);
+  border: 1px solid transparent;
+  border-radius: var(--rsp-radius);
+  color: var(--rsp-text);
+  background-color: transparent;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  transition:
+    background-color var(--rsp-transition),
+    border-color var(--rsp-transition),
+    color var(--rsp-transition);
+
+  /* align item grid to left rail */
+  padding-left: var(--rsp-left-rail);
+  justify-items: start;
+}
+
+.rsp__item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--rsp-border);
+}
+.rsp__item.is-active {
+  background-color: var(--rsp-bg-active);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Icon circle */
+.rsp__icon {
+  width: var(--rsp-icon-circle);
+  height: var(--rsp-icon-circle);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;               /* center the glyph inside */
+  background-color: transparent;
+  border: 1.5px solid rgba(255,255,255,0.85);
+  margin-left: 0;                    /* no drift */
+}
+.rsp__icon svg {
+  width: var(--rsp-icon-svg);
+  height: var(--rsp-icon-svg);
+}
+
+/* Label */
+.rsp__label {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hide labels in collapsed (baseline) */
+.sidebar-rsp.is-collapsed .rsp__item .rsp__label,
+.sidebar-rsp.hover-expand.is-collapsed:not(.is-pinned):not(:hover) .rsp__label {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ===== Footer ===== */
+.rsp__footer {
+  border-top: 1px solid var(--rsp-border);
+  padding: 10px 12px;
+  color: var(--rsp-muted);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 12px;
+
+  /* align footer content to the same left rail under the icons */
+  padding-left: calc(var(--rsp-left-rail) + 6px);
+}
+
+.rsp__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ===== Mobile behavior: off-canvas slide-in ===== */
+@media (max-width: 991.98px) {
+  .sidebar-rsp {
+    transform: translateX(-100%);
+    transition: transform var(--rsp-transition), width var(--rsp-transition);
+  }
+  .sidebar-rsp.is-expanded {
+    transform: translateX(0);
+  }
+}
+
+/* ===== Accessibility ===== */
+.rsp__item:focus-visible,
+.rsp__btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   COLLAPSED: compact icon pills (small shape, not full width)
+   ========================================================= */
+.sidebar-rsp.is-collapsed .rsp__item,
+.sidebar-rsp.hover-expand.is-collapsed:not(.is-pinned):not(:hover) .rsp__item {
+  grid-template-columns: var(--rsp-icon-circle); /* icon only */
+  width: auto;                     /* shrink to content */
+  align-self: flex-start;          /* don't stretch full width */
+  justify-self: flex-start;
+  justify-items: center;           /* center the icon within the small shape */
+  padding: 6px;                    /* compact padding around circle */
+  padding-left: var(--rsp-left-rail);
+  padding-right: 6px;
+  border-radius: 999px;            /* small pill */
+  background-color: transparent;   /* hover/active color below */
+  box-sizing: border-box;
+}
+
+/* Collapsed hover: highlight only the small pill */
+.sidebar-rsp.is-collapsed .rsp__item:hover,
+.sidebar-rsp.hover-expand.is-collapsed:not(.is-pinned):not(:hover) .rsp__item:hover {
+  background-color: rgba(255,255,255,0.08);
+  border-color: var(--rsp-border);
+}
+
+/* Collapsed active: small pill active look */
+.sidebar-rsp.is-collapsed .rsp__item.is-active,
+.sidebar-rsp.hover-expand.is-collapsed:not(.is-pinned):not(:hover) .rsp__item.is-active {
+  background-color: var(--rsp-bg-active);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Keep icon circle sizing consistent in collapsed */
+.sidebar-rsp.is-collapsed .rsp__icon,
+.sidebar-rsp.hover-expand.is-collapsed:not(.is-pinned):not(:hover) .rsp__icon {
+  width: var(--rsp-icon-circle);
+  height: var(--rsp-icon-circle);
+  place-items: center;
+}
+
+/* =========================================================
+   FOOTER: align under icons in both expanded & collapsed
+   ========================================================= */
+.sidebar-rsp.is-collapsed .rsp__footer,
+.sidebar-rsp.hover-expand.is-collapsed:not(.is-pinned):not(:hover) .rsp__footer {
+  justify-content: flex-start;                 /* left, not center */
+  padding-left: calc(var(--rsp-left-rail) + 2px);
+}
+
+/* Optional: if footer has an icon, keep its circle consistent */
+.rsp__footer .rsp__icon {
+  width: var(--rsp-icon-circle);
+  height: var(--rsp-icon-circle);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid rgba(255,255,255,0.85);
+  margin-right: 8px;  
+  padding-left: 10px;                        /* space before text */
+}
+.rsp__footer .rsp__icon svg {
+  width: var(--rsp-icon-svg);
+  height: var(--rsp-icon-svg);
+}

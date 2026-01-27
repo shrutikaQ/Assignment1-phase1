@@ -1,0 +1,22 @@
+﻿# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Vite
+dist/
+.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# IDE/editor
+.vscode/
+.idea/
+.DS_Store
+
+# Env files (if any)
+.env
+.env.*

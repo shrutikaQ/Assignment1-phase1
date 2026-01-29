@@ -10,6 +10,7 @@ import { ContactSupport } from '@pages/ContactSupport/ContactSupport'; // ✅ NE
 
 import type { User } from '@types';
 import { navItems as initialNav, homeData } from '@data/staticData';
+import ScanSettings from '@pages/Home/NewScan'; 
 import './styles/sidebar-responsive.css';
 
 const DEFAULT_USER: User = {
@@ -84,18 +85,27 @@ export default function App() {
   // When logged out → show only the message
   if (user === null) return <LoggedOutFullScreen text="You are logged out." />;
 
-  // Choose the page to render based on the active sidebar item
-  const renderContent = () => {
-    switch (activeId) {
-      case 'network':
-        return <NetworkPage />;
-      case 'support': // ✅ NEW: contact support page id
-        return <ContactSupport />;
-      case 'home':
-      default:
-        return <Home data={homeData} />;
-    }
-  };
+  
+
+const renderContent = () => {
+  switch (activeId) {
+    case 'network':
+      return <NetworkPage />;
+    case 'scan':
+      return <ScanSettings />; // or <ScanSettingsGlass />
+    case 'support':
+      return <ContactSupport />;
+    case 'home':
+    default:
+      return (
+        <Home
+          data={homeData}
+          onNewScan={() => handleSelect('scan')} // ✅ pass callback to Home
+        />
+      );
+  }
+};
+
 
 
   // Logged in → full app layout

@@ -1,13 +1,16 @@
 import React from 'react';
-import type { HomePageData } from '@types'; // or: '../../types' if you don't use path aliases
+import type { HomePageData } from '@types';
 
-type HomeProps = { data: HomePageData };
+type HomeProps = {
+  data: HomePageData;
+  onNewScan?: () => void; // ✅ new prop
+};
 
-// Helper to convert labels like "Medium Risk" -> "medium-risk" for CSS class names
+// Helper to convert labels like "Medium Risk" -> "medium-risk"
 const toClassSafe = (s: string) =>
   s.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-_]/g, '');
 
-const Home: React.FC<HomeProps> = ({ data }) => {
+const Home: React.FC<HomeProps> = ({ data, onNewScan }) => {
   const { banner, stats, severityLabels, scanDetails, support } = data;
 
   return (
@@ -28,14 +31,26 @@ const Home: React.FC<HomeProps> = ({ data }) => {
           </div>
 
           <div className="banner-actions">
-            {banner.actions.map((a, idx) => (
-              <button key={a} className={`btn-pill ${idx === 0 ? 'primary' : ''}`} type="button">
-                {a}
-              </button>
-            ))}
+            {banner.actions.map((a, idx) => {
+              const isPrimary = idx === 0;
+              const props = isPrimary
+                ? { onClick: onNewScan }                        // ✅ clicking first button opens New Scan page
+                : { onClick: () => console.log(a, 'clicked') }; // optional
+              return (
+                <button
+                  key={a}
+                  className={`btn-pill ${isPrimary ? 'primary' : ''}`}
+                  type="button"
+                  {...props}
+                >
+                  {a}
+                </button>
+              );
+            })}
           </div>
         </div>
 
+        {/* …rest of your Home as-is… */}
         {/* Stat cards */}
         <div className="grid-2 gap16">
           <div className="panel stat-card stat-blue" role="region" aria-label="total hosts">
@@ -43,7 +58,6 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             <div className="stat-value">{stats.totalHosts.value}</div>
             <div className="stat-note">{stats.totalHosts.note}</div>
           </div>
-
           <div className="panel stat-card stat-orange" role="region" aria-label="live host in compliance">
             <div className="stat-title">Live Host in compliance</div>
             <div className="stat-value">{stats.liveCompliance.value}</div>
@@ -67,7 +81,6 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             ))}
           </ul>
 
-          {/* Placeholder bars; swap with a real chart if needed */}
           <div className="bars" aria-hidden="true">
             <div className="bar" />
             <div className="bar" />
@@ -89,13 +102,11 @@ const Home: React.FC<HomeProps> = ({ data }) => {
               <div className="mini-value">{scanDetails.status}</div>
               <div className="mini-note started">● {scanDetails.statusNote}</div>
             </div>
-
             <div className="mini-card">
               <div className="mini-title">LAST SUBMITTED</div>
               <div className="mini-value">{scanDetails.lastSubmitted}</div>
               <div className="mini-note">No previous scans</div>
             </div>
-
             <div className="mini-card">
               <div className="mini-title">NEXT DUE</div>
               <div className="mini-value">{scanDetails.nextDue}</div>
@@ -104,7 +115,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
           </div>
 
           <div className="row btn-row">
-            <button className="btn-long success" type="button">
+            <button className="btn-long success" type="button" onClick={onNewScan}>
               {scanDetails.footerButtons[0]}
             </button>
             <button className="btn-long outline" type="button">
@@ -119,17 +130,12 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         <div className="panel support">
           <div className="support-title">{support.title}</div>
           <div className="support-sub">{support.subtitle}</div>
-
           <ul className="support-list">
             {support.items.map((q) => (
               <li key={q} className="support-item">
-                <span className="support-icon" aria-hidden>
-                  📄
-                </span>
+                <span className="support-icon" aria-hidden>📄</span>
                 <span className="support-text">{q}</span>
-                <span className="support-go" aria-hidden>
-                  ↗
-                </span>
+                <span className="support-go" aria-hidden>↗</span>
               </li>
             ))}
           </ul>

@@ -207,4 +207,54 @@
   .portal-sub {
     font-size: 5px;
   }
+}/* The clickable chip button: strip all native button styles */
+.user-chip-btn {
+  all: unset;                    /* reset every default style */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  /* keep it on top just in case of overlaps */
+  position: relative;
+  z-index: 2;
 }
+
+/* Optional: custom focus ring for accessibility */
+.user-chip-btn:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.4);
+  outline-offset: 2px;
+}
+
+.user-chip-btn:hover .initials {
+  filter: brightness(1.03);
+  transform: translateY(-0.5px);
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+/* Parent wrapper sometimes adds padding/border/shadow */
+.user-chip {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0;
+  border-radius: 0;
+}
+
+/* Ensure nothing else nearby draws a box */
+.header-right,
+.portal {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* The initials circle still keeps its own styles inside your inline style block,
+   but ensure no extra effects leak in: */
+.initials {
+  box-shadow: 0 0 0 2px var(--surface); /* keep the subtle ring as you had */
+}
+
+
+/* Keep the chip clickable above neighbors just in case */
+.user-chip-btn { position: relative; z-index: 2; }
+.header-right { position: relative; z-index: 1; }

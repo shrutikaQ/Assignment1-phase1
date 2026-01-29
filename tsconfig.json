@@ -7,7 +7,9 @@
       "@types/*": ["src/types/*"],
       "@data/*": ["src/data/*"],
       "@assets/*": ["src/assets/*"],
-      "@styles/*": ["src/styles/*"]   // ✅ must be present
+          "@types": ["src/types/index.ts"],       
+      "@styles/*": ["src/styles/*"] ,
+        "@pages/*": ["src/pages/*"]  // ✅ must be present
     },
     "moduleResolution": "Bundler",
     "module": "ESNext",

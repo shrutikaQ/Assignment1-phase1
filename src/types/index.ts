@@ -1,10 +1,13 @@
 
-export interface User {
+
+// src/types.ts
+export type User = {
   name: string;
   role?: string;
   initials?: string;
+  email?: string;
+  avatarUrl?: string;
 };
-
 
 
 // src/types/index.ts
@@ -25,6 +28,7 @@ export interface HomePageData {
     complianceNote: string; // "Require immediate action"
     actions: string[]; // ["Start Scan", "Asset Wizard"]
   };
+  
   stats: {
     totalHosts: { value: string; note: string };
     liveCompliance: { value: string; note: string };
@@ -46,3 +50,14 @@ export interface HomePageData {
     contactCta: string; // Contact Support
   };
 }
+// src/data/staticData.ts (excerpt)
+export const navItems = [
+  { id: 'home', label: 'Home', icon: 'home', active: true },
+  { id: 'network', label: 'Network', icon: 'lan' },
+  { id: 'contact', label: 'Contact Support', icon: 'support' }, // ✅ add this
+  // ...
+];
+
+
+
+

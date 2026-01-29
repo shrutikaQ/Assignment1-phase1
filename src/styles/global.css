@@ -1,4 +1,5 @@
-
+@import './variable.css';
+@import './response.css';
 :root{
   /* Screenshot-inspired palette */
   --bg:#f3f4f6;           /* page gray */

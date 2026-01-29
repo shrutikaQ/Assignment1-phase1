@@ -4,11 +4,7 @@ import * as React from 'react';
 import type { User, NavItem, HomePageData } from '../types';
 
 // -------------------------
-export const currentUser: User = {
-  name: 'Shrutika Patil',
-  role: 'Merchant Portal',
-  initials: 'SP',
-};
+
 
 export const homeData: HomePageData = {
   pageTitle: 'PCI dashboard',
@@ -60,7 +56,7 @@ export const navItems: NavItem[] = [
   { id: 'network',    label: 'Network',         icon: React.createElement(LanOutlined) },
   { id: 'compliance', label: 'Compliance',      icon: React.createElement(AssignmentTurnedInOutlined) },
   { id: 'account',    label: 'Account',         icon: React.createElement(PersonOutline) },
-  { id: 'support',    label: 'Contact Support', icon: React.createElement(ChatBubbleOutline) },
+  { id: 'support',    label: 'ContactSupport', icon: React.createElement(ChatBubbleOutline) },
   { id: 'resources',  label: 'Resources',       icon: React.createElement(MenuBookOutlined) },
   { id: 'about',      label: 'About',           icon: React.createElement(InfoOutlined) },
 ];

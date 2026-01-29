@@ -1,0 +1,199 @@
+/* Root padding to match your main layout spacing */
+.network-root {
+  padding: 16px;
+}
+
+/* Top shell (title + tabs) */
+.network-shell {
+  border-radius: 12px;
+  border: 1px solid var(--q-divider, rgba(0,0,0,0.12));
+  padding: 8px 16px 0 16px;
+  margin-bottom: 16px;
+  background: var(--q-surface, var(--mui-palette-background-paper, #fff));
+}
+
+.network-title-row {
+  margin-bottom: 8px;
+}
+
+.network-title-icon {
+  color: var(--q-muted, rgba(0,0,0,0.54));
+}
+
+.network-title-text {
+  font-weight: 700 !important;
+}
+
+/* Tabs styling */
+.network-tabs .MuiTab-root {
+  text-transform: none;
+  font-weight: 600;
+  min-height: 44px;
+}
+
+.network-tabs .MuiTabs-flexContainer {
+  gap: 4px;
+}
+
+/* Main panel (actions + table + pagination) */
+.network-panel {
+  border-radius: 12px;
+  border: 1px solid var(--q-divider, rgba(0,0,0,0.12));
+  background: var(--q-surface, var(--mui-palette-background-paper, #fff));
+  padding: 16px;
+}
+
+.network-panel-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.network-actions {
+  display: inline-flex;
+  gap: 8px;
+}
+
+/* Compact pagination (chip style) */
+.network-pagination {
+  display: inline-flex;
+  align-items: center;
+}
+
+.pager-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--q-divider, rgba(0,0,0,0.12));
+  background: var(--q-chip-bg, var(--mui-palette-background-paper, #fff));
+  padding: 2px 4px;
+}
+
+.pager-chip .MuiIconButton-root {
+  width: 28px;
+  height: 28px;
+}
+
+.pager-label {
+  font-size: 0.875rem;
+  padding: 0 10px;
+  min-width: 96px;
+  text-align: center;
+  color: var(--q-muted, rgba(0,0,0,0.7));
+}
+
+/* Table wrapper */
+.network-table-wrap {
+  border: 1px solid var(--q-divider, rgba(0,0,0,0.12));
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Table header */
+.network-thead-row .th {
+  font-weight: 700 !important;
+  color: var(--q-muted, rgba(0,0,0,0.6));
+  background: #eaf2fb; /* matches the light blue in your screenshot */
+  white-space: nowrap;
+  border-bottom: 1px solid var(--q-divider, rgba(0,0,0,0.12));
+}
+
+.network-thead-row .th.details { width: 92px; }
+.network-thead-row .th.view    { width: 92px; }
+.network-thead-row .th.status  { width: 180px; }
+.network-thead-row .th.date    { width: 160px; }
+
+/* Rows */
+.network-row .cell {
+  border-bottom-color: var(--q-divider, rgba(0,0,0,0.12)) !important;
+}
+
+.cell.details,
+.cell.view {
+  width: 92px;
+}
+
+.icon-btn {
+  color: var(--q-icon, rgba(0,0,0,0.6));
+}
+
+.scan-title {
+  font-weight: 600;
+  color: var(--q-text, var(--mui-palette-text-primary, #111));
+}
+
+.scan-date {
+  color: var(--q-muted, rgba(0,0,0,0.6));
+}
+
+/* Status colors like screenshot (Failed = red) */
+.status {
+  font-weight: 600;
+}
+.status-failed  { color: #d32f2f; } /* error.main */
+.status-success { color: #2e7d32; } /* success.main */
+.status-running { color: #ed6c02; } /* warning.main */
+.status-queued  { color: rgba(0,0,0,0.6); }
+
+/* Empty state row */
+.empty-state {
+  padding: 48px 0 !important;
+  color: var(--q-muted, rgba(0,0,0,0.6));
+}
+
+/* Divider margin */
+.panel-divider {
+  margin-top: 16px;
+  opacity: 0.5;
+}
+/* --- Custom buttons on Network page --- */
+.newscan-btn {
+  background: #2335d5 !important;   /* primary fill */
+  color: #fff !important;
+  font-weight: 700;
+  border-radius: 8px !important;
+  padding: 8px 20px !important;
+  text-transform: none !important;
+}
+.newscan-btn:hover {
+  background: #2335d5 !important;
+}
+
+.search-btn {
+  border-color: #090909 !important;
+  color: #090909 !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  padding: 8px 20px !important;
+  text-transform: none !important;
+}
+.search-btn:hover {
+  background: #2335d5 !important;
+  border-color: #090909 !important;
+  color:#fff !important;
+}
+/* Inactive tab text */
+.network-tabs .MuiTab-root {
+  color: #666;               /* text for inactive */
+}
+
+/* Hover (optional) */
+.network-tabs .MuiTab-root:hover {
+  color: #111;
+}
+
+/* Selected tab text */
+.network-tabs .MuiTab-root.Mui-selected {
+  color: #2335d5;            /* <- your active color */
+}
+
+/* Indicator (the underline) */
+.network-tabs .MuiTabs-indicator {
+  background-color: #2335d5; /* match active text color */
+}
+
+/* Optional: adjust font-weight for active tab */
+.network-tabs .MuiTab-root.Mui-selected {
+  font-weight: 700;
+}

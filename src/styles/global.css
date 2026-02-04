@@ -351,3 +351,14 @@ body{
   --text-color: #ffffff;
   --background-color: #121212;
 }
+/* HTML tooltip themed via your CSS variables */
+.highcharts-tooltip-container { z-index: 99999 !important; pointer-events: none; }
+.severity-tooltip {
+  background: var(--surface, #ffffff);
+  color: var(--text-color, #0f172a);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  pointer-events: none;
+}
+.severity-tooltip > div { padding: 6px 8px; }

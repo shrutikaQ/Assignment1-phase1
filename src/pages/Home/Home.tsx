@@ -1,17 +1,17 @@
+// src/pages/Home/Home.tsx
 import React from 'react';
 import type { HomePageData } from '@types';
 
+// ✅ Chart: reads data from Redux and updates reactively
+import SeverityBarChart from '../../components/charts/SeverityBarChart';
+
 type HomeProps = {
   data: HomePageData;
-  onNewScan?: () => void; // ✅ new prop
+  onNewScan?: () => void; // optional callback to open New Scan page
 };
 
-// Helper to convert labels like "Medium Risk" -> "medium-risk"
-const toClassSafe = (s: string) =>
-  s.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-_]/g, '');
-
 const Home: React.FC<HomeProps> = ({ data, onNewScan }) => {
-  const { banner, stats, severityLabels, scanDetails, support } = data;
+  const { banner, stats, /* severityLabels, */ scanDetails, support } = data;
 
   return (
     <section className="content-grid" aria-label="Home content">
@@ -34,8 +34,8 @@ const Home: React.FC<HomeProps> = ({ data, onNewScan }) => {
             {banner.actions.map((a, idx) => {
               const isPrimary = idx === 0;
               const props = isPrimary
-                ? { onClick: onNewScan }                        // ✅ clicking first button opens New Scan page
-                : { onClick: () => console.log(a, 'clicked') }; // optional
+                ? { onClick: onNewScan } // clicking first button opens New Scan (if provided)
+                : { onClick: () => console.log(a, 'clicked') };
               return (
                 <button
                   key={a}
@@ -50,7 +50,6 @@ const Home: React.FC<HomeProps> = ({ data, onNewScan }) => {
           </div>
         </div>
 
-        {/* …rest of your Home as-is… */}
         {/* Stat cards */}
         <div className="grid-2 gap16">
           <div className="panel stat-card stat-blue" role="region" aria-label="total hosts">
@@ -58,36 +57,75 @@ const Home: React.FC<HomeProps> = ({ data, onNewScan }) => {
             <div className="stat-value">{stats.totalHosts.value}</div>
             <div className="stat-note">{stats.totalHosts.note}</div>
           </div>
-          <div className="panel stat-card stat-orange" role="region" aria-label="live host in compliance">
+
+          <div
+            className="panel stat-card stat-orange"
+            role="region"
+            aria-label="live host in compliance"
+          >
             <div className="stat-title">Live Host in compliance</div>
             <div className="stat-value">{stats.liveCompliance.value}</div>
             <div className="stat-note">{stats.liveCompliance.note}</div>
           </div>
         </div>
 
-        {/* Vulnerability Distribution */}
-        <div className="panel purple" role="region" aria-label="vulnerability distribution">
-          <div className="panel-head">
-            <div className="panel-title">Vulnerability Distribution</div>
-            <div className="panel-sub">severity breakdown by level</div>
+        {/* ===========================
+            Severity (replaces purple "Vulnerability Distribution" box)
+            =========================== */}
+        <section
+          aria-label="Vulnerability Distribution"
+          style={{
+            background: 'var(--surface, #ede9fe)',
+            border: '1px solid var(--border-color, #e2e8f0)',
+            borderRadius: 12,
+            padding: 16,
+            marginTop: 16,
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+            <h3 style={{ margin: 0 }}>Severity</h3>
+
+            {/* Optional legend (kept compact and in sync with chart colors) */}
+            <div style={{ display: 'flex', gap: 12, fontSize: 12 }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                <span
+                  style={{ width: 8, height: 8, borderRadius: '50%', background: '#ef4444' }}
+                />
+                Critical
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                <span
+                  style={{ width: 8, height: 8, borderRadius: '50%', background: '#f97316' }}
+                />
+                High
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                <span
+                  style={{ width: 8, height: 8, borderRadius: '50%', background: '#f59e0b' }}
+                />
+                Medium
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                <span
+                  style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e' }}
+                />
+                Low
+              </span>
+            </div>
           </div>
 
-          <ul className="legend" aria-label="severity legend">
-            {severityLabels.map((lbl) => (
-              <li key={lbl}>
-                <span className={`dot ${toClassSafe(lbl)}`} aria-hidden="true" />
-                {lbl}
-              </li>
-            ))}
-          </ul>
-
-          <div className="bars" aria-hidden="true">
-            <div className="bar" />
-            <div className="bar" />
-            <div className="bar" />
-            <div className="bar" />
+          <div style={{ marginTop: 8 }}>
+            <SeverityBarChart />
           </div>
-        </div>
+        </section>
+
+        {/* ❌ Removed the old decorative bars block */}
+        {/* <div className="bars" aria-hidden="true">
+          <div className="bar" />
+          <div className="bar" />
+          <div className="bar" />
+          <div className="bar" />
+        </div> */}
 
         {/* Scan details */}
         <div className="panel" role="region" aria-label="scan details">
@@ -102,11 +140,13 @@ const Home: React.FC<HomeProps> = ({ data, onNewScan }) => {
               <div className="mini-value">{scanDetails.status}</div>
               <div className="mini-note started">● {scanDetails.statusNote}</div>
             </div>
+
             <div className="mini-card">
               <div className="mini-title">LAST SUBMITTED</div>
               <div className="mini-value">{scanDetails.lastSubmitted}</div>
               <div className="mini-note">No previous scans</div>
             </div>
+
             <div className="mini-card">
               <div className="mini-title">NEXT DUE</div>
               <div className="mini-value">{scanDetails.nextDue}</div>
@@ -130,12 +170,17 @@ const Home: React.FC<HomeProps> = ({ data, onNewScan }) => {
         <div className="panel support">
           <div className="support-title">{support.title}</div>
           <div className="support-sub">{support.subtitle}</div>
+
           <ul className="support-list">
             {support.items.map((q) => (
               <li key={q} className="support-item">
-                <span className="support-icon" aria-hidden>📄</span>
+                <span className="support-icon" aria-hidden>
+                  📄
+                </span>
                 <span className="support-text">{q}</span>
-                <span className="support-go" aria-hidden>↗</span>
+                <span className="support-go" aria-hidden>
+                  ↗
+                </span>
               </li>
             ))}
           </ul>

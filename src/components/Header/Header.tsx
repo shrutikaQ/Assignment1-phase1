@@ -18,6 +18,14 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import logo from '../../assets/qualys.png';
 import '../../styles/header.css';
 
+/* ✅ NEW: Redux hooks + theme selector/action (correct path + case) */
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectThemeMode, toggleTheme } from '../../store/themeslice';
+
+/* ✅ NEW: MUI icons for theme toggle */
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+
 type Props = {
   user: User;
   onLogout?: () => void;
@@ -68,6 +76,10 @@ export const Header: React.FC<Props> = ({ user, onLogout, onLogin }) => {
     });
   };
 
+  /* ✅ NEW: Hooks must be INSIDE the component */
+  const dispatch = useAppDispatch();
+  const mode = useAppSelector(selectThemeMode); // 'light' | 'dark'
+
   return (
     <header className="header">
       <div className="header-left">
@@ -79,6 +91,17 @@ export const Header: React.FC<Props> = ({ user, onLogout, onLogin }) => {
       </div>
 
       <div className="header-right">
+        {/* ✅ NEW: Single theme toggle icon (before Notifications). Explicit color so it’s visible */}
+        <IconButton
+          aria-label="Toggle theme"
+          size="large"
+          sx={{ mr: 1, color: 'var(--fg, #0f172a)' }}
+          onClick={() => dispatch(toggleTheme())}
+          title={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+        </IconButton>
+
         <IconButton aria-label="Notifications" size="large" sx={{ mr: 1 }}>
           <Badge badgeContent={3} color="error" overlap="circular">
             <NotificationsIcon />
@@ -184,7 +207,6 @@ export const Header: React.FC<Props> = ({ user, onLogout, onLogin }) => {
                 {user.name}
               </Typography>
 
-              {/* ✅ Clean, type-safe email display */}
               {user.email ? (
                 <Typography
                   variant="caption"
@@ -200,7 +222,6 @@ export const Header: React.FC<Props> = ({ user, onLogout, onLogin }) => {
 
           <Divider />
 
-          {/* Optional: quick mock switches (only work if onLogin is provided) */}
           <MenuItem onClick={handleSwitchToDemo} disabled={!onLogin}>
             <ListItemIcon sx={{ minWidth: 32, color: 'text.secondary' }}>👤</ListItemIcon>
             <Typography variant="body2" sx={{ fontWeight: 600 }}>
@@ -217,7 +238,6 @@ export const Header: React.FC<Props> = ({ user, onLogout, onLogin }) => {
 
           <Divider />
 
-          {/* Logout */}
           <MenuItem onClick={handleLogout}>
             <ListItemIcon sx={{ minWidth: 32, color: 'text.secondary' }}>
               <LogoutIcon fontSize="small" />

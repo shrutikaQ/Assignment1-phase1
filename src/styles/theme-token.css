@@ -1,0 +1,51 @@
+/* ---------- Light mode (default) ---------- */
+:root {
+  /* Page & surfaces */
+  --page-bg: #ffffff;
+  --surface: #f8fafc;
+  --surface-2: #eef2f7;
+
+  /* Text */
+  --text-color: #0f172a;
+  --text-muted: #475569;
+
+  /* Borders */
+  --border-color: #e2e8f0;
+
+  /* Brand */
+  --primary: #3b82f6;
+  --primary-contrast: #ffffff;
+
+  /* Derived for common UI blocks */
+  --header-bg: var(--surface);
+  --header-fg: var(--text-color);
+  --sidebar-bg: var(--surface);
+  --sidebar-fg: var(--text-color);
+
+  /* Handy fallbacks for inline styles */
+  --bg: var(--page-bg);
+  --fg: var(--text-color);
+}
+
+/* ---------- Dark mode ---------- */
+:root[data-theme="dark"] {
+  --page-bg: #0b1220;
+  --surface: #111827;
+  --surface-2: #0f172a;
+
+  --text-color: #e5e7eb;
+  --text-muted: #9ca3af;
+
+  --border-color: #374151;
+
+  --primary: #60a5fa;
+  --primary-contrast: #0b1220;
+
+  --header-bg: var(--surface);
+  --header-fg: var(--text-color);
+  --sidebar-bg: var(--surface);
+  --sidebar-fg: var(--text-color);
+
+  --bg: var(--page-bg);
+  --fg: var(--text-color);
+}

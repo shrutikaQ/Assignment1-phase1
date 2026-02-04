@@ -1,17 +1,59 @@
+/* =========================================================
+   THEME BRIDGE — keep your existing (light) colors as default,
+   and only change values when [data-theme="dark"] is active.
+   ========================================================= */
+   :root:not([data-theme="dark"]) {
+  --primary-color: #2335d5;
+  --text-color: #ffffff;
+  --background-color: #ffffff;
+  --muted-color: rgba(255, 255, 255, 0.7);
+  --border-color: rgba(255, 255, 255, 0.15);
+  --shadow-color: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] {
+  --primary-color: #1f2937;
+  --text-color: #e5e7eb;
+  --background-color: #0b1220;
+  --muted-color: rgba(229, 231, 235, 0.7);
+  --border-color: rgba(255, 255, 255, 0.16);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+:root {
+  /* These can also live in src/index.css if you prefer global control */
+  --primary-color: #2335d5;          /* same as previous --rsp-bg */
+  --text-color: #ffffff;
+  --background-color: #ffffff;
+  --muted-color: rgba(255, 255, 255, 0.7);
+  --border-color: rgba(255, 255, 255, 0.15);
+  --shadow-color: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] {
+  /* Tune these to your preferred dark palette */
+  --primary-color: #1f2937;          /* deep slate */
+  --text-color: #e5e7eb;             /* light gray text */
+  --background-color: #0b1220;       /* page bg if needed */
+  --muted-color: rgba(229, 231, 235, 0.7);
+  --border-color: rgba(255, 255, 255, 0.16);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+}
 
 /* ========== Vertical Hover-Expand Sidebar (Screenshot Style) ========== */
 :root {
   --rsp-width-collapsed: 56px;       /* icons-only width */
   --rsp-width-expanded: 200px;       /* expanded width on hover/pinned */
 
-  --rsp-bg: #2335d5;                 /* main blue */
-  --rsp-bg-darker: #2335d5;          /* header/section darker band */
-  --rsp-bg-active: #2335d5;          /* active item background */
+  /* Map to theme vars with fallbacks to your current colors */
+  --rsp-bg: var(--primary-color, #2335d5);          /* main blue */
+  --rsp-bg-darker: var(--primary-color, #2335d5);   /* header/section darker band */
+  --rsp-bg-active: var(--primary-color, #2335d5);   /* active item background */
 
-  --rsp-text: #ffffff;
-  --rsp-muted: rgba(255, 255, 255, 0.7);
-  --rsp-border: rgba(255, 255, 255, 0.15);
-  --rsp-shadow: rgba(0, 0, 0, 0.25);
+  --rsp-text: var(--text-color, #ffffff);
+  --rsp-muted: var(--muted-color, rgba(255, 255, 255, 0.7));
+  --rsp-border: var(--border-color, rgba(255, 255, 255, 0.15));
+  --rsp-shadow: var(--shadow-color, rgba(0, 0, 0, 0.25));
   --rsp-transition: 200ms ease;
   --rsp-radius: 12px;
 
@@ -239,6 +281,16 @@
   }
 }
 
+/* Mobile backdrop (appears only when menu is open) */
+.rsp__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: calc(var(--rsp-z) - 1);
+  display: none;
+}
+.rsp__backdrop.is-visible { display: block; }
+
 /* ===== Accessibility ===== */
 .rsp__item:focus-visible,
 .rsp__btn:focus-visible {
@@ -303,8 +355,8 @@
   display: grid;
   place-items: center;
   border: 1.5px solid rgba(255,255,255,0.85);
-  margin-right: 8px;  
-  padding-left: 10px;                        /* space before text */
+  margin-right: 8px;
+  padding-left: 10px;                          /* space before text */
 }
 .rsp__footer .rsp__icon svg {
   width: var(--rsp-icon-svg);

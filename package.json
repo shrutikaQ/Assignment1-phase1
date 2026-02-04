@@ -13,8 +13,12 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.7",
     "@mui/material": "^7.3.7",
+    "@reduxjs/toolkit": "^2.11.2",
+    "highcharts": "^12.5.0",
+    "highcharts-react-official": "^3.2.3",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@types/node": "^25.0.9",

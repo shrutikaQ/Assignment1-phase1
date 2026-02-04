@@ -1,0 +1,77 @@
+/* This file is loaded LAST so its color rules win without editing page CSS. */
+
+/* Base page */
+html, body, #root {
+  background: var(--page-bg) !important;
+  color: var(--text-color) !important;
+}
+
+/* Header */
+.header, [class*="header"] {
+  background: var(--header-bg) !important;
+  color: var(--header-fg) !important;
+}
+
+/* Sidebar */
+.sidebar, [class*="sidebar"] {
+  background: var(--sidebar-bg) !important;
+  color: var(--sidebar-fg) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Common “container-ish” blocks */
+.container, .content, .main, [class*="container"], [class*="Content"], [class*="Main"] {
+  background: transparent !important; /* usually the page background handles this */
+  color: var(--text-color) !important;
+}
+
+/* Cards / panels / boxes */
+.card, .panel, .box,
+[class*="Card"], [class*="Panel"], [class*="Box"] {
+  background: var(--surface) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* Tables and lists */
+table, .table, [class*="Table"] {
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+  background: var(--surface) !important;
+}
+thead, th {
+  color: var(--text-color) !important;
+  background: var(--surface-2) !important;
+}
+tbody tr {
+  border-color: var(--border-color) !important;
+}
+
+/* Text helpers */
+.muted, .subtext, [class*="muted"], [class*="Subtext"] {
+  color: var(--text-muted) !important;
+}
+
+/* Links */
+a, a:visited {
+  color: var(--primary) !important;
+}
+
+/* Buttons - primary style */
+.btn-primary, [class*="PrimaryButton"], [class*="primary-button"] {
+  background: var(--primary) !important;
+  color: var(--primary-contrast) !important;
+  border: 1px solid var(--primary) !important;
+}
+
+/* Dividers / borders */
+hr, .divider, [class*="Divider"] {
+  border-color: var(--border-color) !important;
+}
+
+/* MUI paper fallback (most MUI respects ThemeProvider anyway) */
+.MuiPaper-root {
+  background: var(--surface) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color) !important;
+}

@@ -56,6 +56,10 @@ export const navItems: NavItem[] = [
   { id: 'network',    label: 'Network',         icon: React.createElement(LanOutlined) },
   { id: 'compliance', label: 'Compliance',      icon: React.createElement(AssignmentTurnedInOutlined) },
   { id: 'scan',    label: 'New Scan',        icon: React.createElement(AssignmentTurnedInOutlined) },
+  
+// ⭐ NEW — Redux demo route (so you can open your ScanControls + ScansList page)
+  { id: 'scans',      label: 'Scans Demo', icon: React.createElement(AssignmentTurnedInOutlined) },
+
   { id: 'account',    label: 'Account',         icon: React.createElement(PersonOutline) },
   { id: 'support',    label: 'ContactSupport', icon: React.createElement(ChatBubbleOutline) },
   { id: 'resources',  label: 'Resources',       icon: React.createElement(MenuBookOutlined) },

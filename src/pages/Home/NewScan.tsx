@@ -322,7 +322,7 @@ export default function ScanSettings() {
             </dl>
             <div className="tip">
               <span className="tip-dot" aria-hidden />
-              Scans may take longer with **High** bandwidth on throttled networks.
+              Scans may take longer with **LOW** bandwidth on throttled networks.
             </div>
           </div>
         </aside>
